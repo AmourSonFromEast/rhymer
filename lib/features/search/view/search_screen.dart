@@ -4,8 +4,6 @@ import 'package:flutter_application_test/ui/ui.dart';
 
 import '../widgets/widgets.dart';
 
-
-
 @RoutePage()
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -24,9 +22,11 @@ class SearchScreen extends StatelessWidget {
           backgroundColor: theme.cardColor,
           elevation: 0,
           surfaceTintColor: Colors.transparent,
-          bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(70),
-            child: SearchButton(),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(70),
+            child: SearchButton(
+              onTap: () => _showSearchBottomSheet(context, theme),
+            ),
           ),
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 16)),
@@ -47,9 +47,24 @@ class SearchScreen extends StatelessWidget {
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 16)),
         SliverList.builder(
-          itemBuilder: (context, index) => const RhymeListCard(),
+          itemBuilder: (context, index) => const RhymeListCard(
+            rhyme: "Рифма",
+          ),
         ),
       ],
+    );
+  }
+
+  void _showSearchBottomSheet(BuildContext context, ThemeData theme) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      context: context,
+      builder: (context) => const Padding(
+        padding: EdgeInsets.only(top: 80),
+        child: SearchRhymesBottomSheet(),
+      ),
     );
   }
 }
